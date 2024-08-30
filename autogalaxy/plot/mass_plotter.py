@@ -63,23 +63,26 @@ class MassPlotter(Plotter):
         magnification
             Whether to make a 2D plot (via `imshow`) of the magnification.
         """
-        if convergence:
+            
+        if convergence: # dimensionless
             self.mat_plot_2d.plot_array(
                 array=self.mass_obj.convergence_2d_from(grid=self.grid),
                 visuals_2d=self.get_visuals_2d(),
                 auto_labels=aplt.AutoLabels(
                     title=f"Convergence{title_suffix}",
                     filename=f"convergence_2d{filename_suffix}",
+                    cb_unit='',
                 ),
             )
 
-        if potential:
+        if potential: # dimensionless
             self.mat_plot_2d.plot_array(
                 array=self.mass_obj.potential_2d_from(grid=self.grid),
                 visuals_2d=self.get_visuals_2d(),
                 auto_labels=aplt.AutoLabels(
                     title=f"Potential{title_suffix}",
                     filename=f"potential_2d{filename_suffix}",
+                    cb_unit=''
                 ),
             )
 
@@ -95,6 +98,7 @@ class MassPlotter(Plotter):
                 auto_labels=aplt.AutoLabels(
                     title=f"Deflections Y{title_suffix}",
                     filename=f"deflections_y_2d{filename_suffix}",
+                    cb_unit='  ["]'
                 ),
             )
 
@@ -110,6 +114,7 @@ class MassPlotter(Plotter):
                 auto_labels=aplt.AutoLabels(
                     title=f"Deflections X{title_suffix}",
                     filename=f"deflections_x_2d{filename_suffix}",
+                    cb_unit='  ["]'
                 ),
             )
 

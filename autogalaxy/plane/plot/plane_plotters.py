@@ -175,7 +175,7 @@ class PlanePlotter(Plotter):
                 array=self.plane.image_2d_from(grid=self.grid),
                 visuals_2d=self.get_visuals_2d(),
                 auto_labels=aplt.AutoLabels(
-                    title=f"Image{title_suffix}", filename=f"image_2d{filename_suffix}"
+                    title=f"Image{title_suffix}", filename=f"image_2d{filename_suffix}", cb_unit='  $[\mathrm{e^{-}}\,\mathrm{s^{-1}}]$'
                 ),
             )
 
@@ -193,6 +193,7 @@ class PlanePlotter(Plotter):
                 auto_labels=aplt.AutoLabels(
                     title=title,
                     filename=f"plane_image{filename_suffix}",
+                    cb_unit='  $[\mathrm{e^{-}}\,\mathrm{s^{-1}}]$'
                 ),
             )
 

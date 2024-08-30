@@ -440,7 +440,7 @@ class GalaxyPlotter(Plotter):
                 array=self.galaxy.image_2d_from(grid=self.grid),
                 visuals_2d=self.get_visuals_2d(),
                 auto_labels=aplt.AutoLabels(
-                    title=f"Image{title_suffix}", filename=f"image_2d{filename_suffix}"
+                    title=f"Image{title_suffix}", filename=f"image_2d{filename_suffix}", cb_unit='  $[\mathrm{e^{-}}\,\mathrm{s^{-1}}]$'
                 ),
             )
 

@@ -43,8 +43,8 @@ def mass_from(mass, mass_result, unfix_mass_centre: bool = False) -> af.Model:
 
         mass.centre = af.Model(mass.cls).centre
 
-        mass.centre.centre_0 = af.GaussianPrior(mean=centre_tuple[0], sigma=0.05)
-        mass.centre.centre_1 = af.GaussianPrior(mean=centre_tuple[1], sigma=0.05)
+        mass.centre.centre_0 = af.GaussianPrior(mean=centre_tuple[0], sigma=0.3)
+        mass.centre.centre_1 = af.GaussianPrior(mean=centre_tuple[1], sigma=0.3)
 
     return mass
 

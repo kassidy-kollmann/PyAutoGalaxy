@@ -332,6 +332,7 @@ class OperateDeflections:
             If input, the `evaluation_grid` decorator creates the 2D grid at this resolution, therefore enabling the
             critical curve to be computed more accurately using a higher resolution grid.
         """
+
         tangential_eigen_values = self.tangential_eigen_value_from(grid=grid)
 
         tangential_critical_curve_indices_list = measure.find_contours(
@@ -705,6 +706,9 @@ class OperateDeflections:
         einstein_mass_angular_list = self.einstein_mass_angular_list_from(
             grid=grid, pixel_scale=pixel_scale
         )
+        
+        if len(einstein_mass_angular_list) == 0:
+            return 0
 
         if len(einstein_mass_angular_list) > 1:
             logger.info(
@@ -733,6 +737,7 @@ class OperateDeflections:
         grid
             The 2D grid of (y,x) arc-second coordinates the deflection angles and Jacobian are computed on.
         """
+        
         deflections = self.deflections_yx_2d_from(grid=grid)
 
         # TODO : Can probably make this work on irregular grid? Is there any point?

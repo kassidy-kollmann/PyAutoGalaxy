@@ -1,6 +1,6 @@
 from typing import Tuple
 
-from autogalaxy.profiles.mass.dark.nfw import NFWSph
+from autogalaxy.profiles.mass.dark.gnfw import gNFWSph
 
 from astropy import units
 
@@ -8,9 +8,11 @@ import numpy as np
 import warnings
 from autogalaxy import cosmology as cosmo
 
+from scipy.integrate import quad
+
 
 def kappa_s_and_scale_radius(
-    cosmology, virial_mass, concentration, virial_overdens, redshift_object, redshift_source
+    cosmology, virial_mass, concentration, virial_overdens, redshift_object, redshift_source, inner_slope
 ):
 
     critical_density = (
@@ -34,16 +36,17 @@ def kappa_s_and_scale_radius(
     ) ** (
         1.0 / 3.0
     )  # r_vir
-    de_c = (
-        virial_overdens
-        / 3.0
-        * (
-            concentration**3
-            / (np.log(1.0 + concentration) - concentration / (1.0 + concentration))
-        )
-    )  # rho_c
-
+    
     scale_radius_kpc = virial_radius / concentration  # scale radius in kpc
+    
+    ##############################
+    def integrand(r):
+        return (r**2 / r**inner_slope) * (1 + r/scale_radius_kpc)**(inner_slope-3) 
+        
+    de_c = ((virial_overdens / 3.0) * (virial_radius**3 / scale_radius_kpc**inner_slope) 
+            / quad(integrand,0,virial_radius)[0]) # rho_c
+    ##############################
+    
     rho_s = critical_density * de_c  # rho_s
     kappa_s = rho_s * scale_radius_kpc / critical_surface_density  # kappa_s
     scale_radius = scale_radius_kpc / kpc_per_arcsec  # scale radius in arcsec
@@ -51,7 +54,7 @@ def kappa_s_and_scale_radius(
     return kappa_s, scale_radius, virial_radius, virial_overdens
 
 
-class NFWVirialMassConcSph(NFWSph):
+class gNFWVirialMassConcSph_BACKUP(gNFWSph):
     def __init__(
         self,
         cosmology: cosmo.LensingCosmology = cosmo.Planck15(),
@@ -61,9 +64,10 @@ class NFWVirialMassConcSph(NFWSph):
         virial_overdens: float = 0,
         redshift_object: float = 0.5,
         redshift_source: float = 1.0,
+        inner_slope: float = 1.0,
     ):
         """
-        Spherical NFW profile initialized with the virial mass and concentration of the halo. 
+        Spherical gNFW profile initialized with the virial mass and concentration of the halo. 
         
         The virial radius of the halo is defined as: r_vir = (3*M_vir/4*pi*virial_overdens*critical_density)^1/3.
         
@@ -85,12 +89,15 @@ class NFWVirialMassConcSph(NFWSph):
             Lens redshift.
         redshift_source
             Source redshift.
+        inner_slope
+            The inner slope of the dark matter halo profile.
             
         """
         self.virial_mass = virial_mass
         self.concentration = concentration
         self.redshift_object = redshift_object
         self.redshift_source = redshift_source
+        self.inner_slope = inner_slope
 
         (
             kappa_s,
@@ -104,9 +111,15 @@ class NFWVirialMassConcSph(NFWSph):
             virial_overdens=virial_overdens,
             redshift_object=redshift_object,
             redshift_source=redshift_source,
+            inner_slope=inner_slope
         )
         
         self.virial_radius = virial_radius
         self.virial_overdens = virial_overdens
 
-        super().__init__(centre=centre, kappa_s=kappa_s, scale_radius=scale_radius)
+        super().__init__(
+            centre=centre,
+            kappa_s=kappa_s,
+            inner_slope=inner_slope,
+            scale_radius=scale_radius,
+        )
