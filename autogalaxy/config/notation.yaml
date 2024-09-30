@@ -9,6 +9,7 @@ label:
     centre_1: x
     coefficient: \lambda
     c_2: c_{\rm 2}
+    c_gNFW: c_{\rm gNFW}
     concentration: conc
     core_radius: C_{\rm r}
     core_radius_0: C_{rm r0}
@@ -81,6 +82,7 @@ label_format:
     angular_diameter_distance_to_earth: '{:.4f}'
     beta: '{:.4f}'
     c_2: '{:.4f}'
+    c_gNFW: '{:.4f}'
     centre_0: '{:.4f}'
     centre_1: '{:.4f}'
     coefficient: '{:.4f}'

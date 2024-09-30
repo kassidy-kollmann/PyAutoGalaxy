@@ -30,6 +30,7 @@ radial_minimum:
     gNFW: 1.0e-06
     gNFWMCRLudlow: 1.0e-06
     gNFWVirialMassConcSph: 1.0e-06
+    gNFWVirialMassgNFWConcSph: 1.0e-06
     gNFWSph: 1.0e-06
     Isothermal: 1.0e-08
     IsothermalCore: 1.0e-08
@@ -120,6 +121,7 @@ over_sampling:
     gNFW: [3.01, 10.01]
     gNFWMCRLudlow: [3.01, 10.01]
     gNFWVirialMassConcSph: [3.01, 10.01]
+    gNFWVirialMassgNFWConcSph: [3.01, 10.01]
     gNFWSph: [3.01, 10.01]
     Isothermal: [3.01, 10.01]
     IsothermalCore: [3.01, 10.01]
@@ -187,6 +189,7 @@ over_sampling:
     gNFW: [32, 4, 2]
     gNFWMCRLudlow: [32, 4, 2]
     gNFWVirialMassConcSph: [32, 4, 2]
+    gNFWVirialMassgNFWConcSph: [32, 4, 2]
     gNFWSph: [32, 4, 2]
     Isothermal: [32, 4, 2]
     IsothermalCore: [32, 4, 2]
